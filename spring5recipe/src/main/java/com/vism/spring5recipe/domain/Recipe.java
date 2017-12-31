@@ -42,11 +42,9 @@ public class Recipe {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
-	
+
 	@ManyToMany
-	@JoinTable(name = "recipe_category", joinColumns = 
-				@JoinColumn(name = "recipe_id"), inverseJoinColumns=@JoinColumn(name = "category_id")
-			)
+	@JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories;
 
 	public Long getId() {
