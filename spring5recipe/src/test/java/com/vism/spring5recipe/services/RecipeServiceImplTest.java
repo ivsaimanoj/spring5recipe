@@ -26,6 +26,7 @@ public class RecipeServiceImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		// no need for spring context for this simple test
 		MockitoAnnotations.initMocks(this);
 		recipeService = new RecipeServiceImpl(recipeRepository);
 	}
@@ -37,6 +38,7 @@ public class RecipeServiceImplTest {
 		HashSet<Recipe> recipesData = new HashSet<>();
 		recipesData.add(recipe);
 		
+		// mockito methods..
 		when(recipeService.getRecipes()).thenReturn(recipesData);
 		
 		Set<Recipe> recipes = recipeService.getRecipes(); 
