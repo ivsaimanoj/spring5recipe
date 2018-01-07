@@ -9,14 +9,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.vism.spring5recipe.repositories.UnitOfMeasureRepository;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-public class UnitOfMeasureIntegrationTest {
+@DataJpaTest // creates an embeddd data and allows us to use JPA 
+public class UnitOfMeasureIT {
 
 	@Autowired
 	UnitOfMeasureRepository uomRepo;
