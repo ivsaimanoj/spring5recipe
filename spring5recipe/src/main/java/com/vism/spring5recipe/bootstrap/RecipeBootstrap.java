@@ -21,91 +21,84 @@ import com.vism.spring5recipe.repositories.UnitOfMeasureRepository;
 
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>{
-	
+
 	private final CategoryRepository categoryRepository;
 	private final RecipeRepository recipeRepository;
-	private final UnitOfMeasureRepository uomRepository;
+	private final UnitOfMeasureRepository uoMeasureRepository;
 	
 	public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository,
-			UnitOfMeasureRepository uomRepository) {
+			UnitOfMeasureRepository uoMeasureRepository) {
+		super();
 		this.categoryRepository = categoryRepository;
 		this.recipeRepository = recipeRepository;
-		this.uomRepository = uomRepository;
-	}
-
-	@Override
-	public void onApplicationEvent(ContextRefreshedEvent arg0) {
-		recipeRepository.saveAll(getRecipes());
+		this.uoMeasureRepository = uoMeasureRepository;
 	}
 	
-	@SuppressWarnings("unused")
 	private List<Recipe> getRecipes() {
-		List<Recipe> recipes = new ArrayList<>(2);
+		List<Recipe> recipesList = new ArrayList<>();
 		
 		// get UOMs
-		Optional<UnitOfMeasure> eachUOMOptional = uomRepository.findByDescription("Each");
-		if (!eachUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Each Unit of measure Not found");
+		Optional<UnitOfMeasure> eachUOMOptinal = uoMeasureRepository.findByDescription("Each");
+		if(!eachUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> tableSpoonUOMOptional = uomRepository.findByDescription("Tablespoon");
-		if (!tableSpoonUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Tablespoon Unit of measure Not found");
+		Optional<UnitOfMeasure> tableSpoonUOMOptinal = uoMeasureRepository.findByDescription("Tablespoon");
+		if(!tableSpoonUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> teaSpoonUOMOptional = uomRepository.findByDescription("Teaspoon");
-		if (!teaSpoonUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Teaspoon Unit of measure Not found");
+		Optional<UnitOfMeasure> teaspoonUOMOptinal = uoMeasureRepository.findByDescription("Teaspoon");
+		if(!teaspoonUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> cupUOMOptional = uomRepository.findByDescription("Cup");
-		if (!cupUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Cup Unit of measure Not found");
+		Optional<UnitOfMeasure> dashUOMOptinal = uoMeasureRepository.findByDescription("Dash");
+		if(!dashUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> pinchUOMOptional = uomRepository.findByDescription("Pinch");
-		if (!pinchUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Pinch Unit of measure Not found");
+		Optional<UnitOfMeasure> cupUOMOptinal = uoMeasureRepository.findByDescription("Cup");
+		if(!cupUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> ounceUOMOptional = uomRepository.findByDescription("Ounce");
-		if (!ounceUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Ounce Unit of measure Not found");
+		Optional<UnitOfMeasure> pinchUOMOptinal = uoMeasureRepository.findByDescription("Pinch");
+		if(!pinchUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
-		Optional<UnitOfMeasure> dashUOMOptional = uomRepository.findByDescription("Dash");
-		if (!dashUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Dash Unit of measure Not found");
-		}
-		Optional<UnitOfMeasure> pintUOMOptional = uomRepository.findByDescription("Pint");
-		if (!pintUOMOptional.isPresent()) {
-			throw new RuntimeException("Expected Pint Unit of measure Not found");
+		Optional<UnitOfMeasure> pintUOMOptinal = uoMeasureRepository.findByDescription("Pint");
+		if(!pintUOMOptinal.isPresent()) {
+			throw new RuntimeException("Expected UOM not found");
 		}
 		
 		// get optionals
-		UnitOfMeasure teaspoon = teaSpoonUOMOptional.get();
-		UnitOfMeasure each = eachUOMOptional.get();
-		UnitOfMeasure tablespoon = tableSpoonUOMOptional.get();
-		UnitOfMeasure cup = cupUOMOptional.get();
-		UnitOfMeasure pinch = pinchUOMOptional.get();
-		UnitOfMeasure ounce = ounceUOMOptional.get();
-		UnitOfMeasure dash = dashUOMOptional.get();
-		UnitOfMeasure pint = pintUOMOptional.get();
+		UnitOfMeasure eachUOM = eachUOMOptinal.get();
+		UnitOfMeasure tablespoonUOM = tableSpoonUOMOptinal.get();
+		UnitOfMeasure teaspoonUOM = teaspoonUOMOptinal.get();
+		UnitOfMeasure dashUOM = dashUOMOptinal.get();
+		UnitOfMeasure cupUOM = cupUOMOptinal.get();
+		UnitOfMeasure pinchUOM = pinchUOMOptinal.get();
+		UnitOfMeasure pintUOM = pintUOMOptinal.get();
 		
 		// get categories
-		Optional<Category> americanCatOptional = categoryRepository.findByDescription("American");
-		if(!americanCatOptional.isPresent()) {
-			throw new RuntimeException("Expected American Category Not found");
+		Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
+		if (!americanCategoryOptional.isPresent()) {
+			throw new RuntimeException("EXpected Category not found");
 		}
-		Category americanCat = americanCatOptional.get();
-
-		Optional<Category> mexicanCatOptional = categoryRepository.findByDescription("Mexican");
-		if(!mexicanCatOptional.isPresent()) {
-			throw new RuntimeException("Expected Mexican Category Not found");
+		Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
+		if (!mexicanCategoryOptional.isPresent()) {
+			throw new RuntimeException("EXpected Category not found");
 		}
-		Category mexicanCat = mexicanCatOptional.get();
+		
+		// get optionals
+		Category americaCategory = americanCategoryOptional.get();
+		Category mexicanCategory = mexicanCategoryOptional.get();
 		
 		// create recipes
+		
 		Recipe guacRecipe = new Recipe();
-		guacRecipe.setDescription("Perfect Guacamole");
-		guacRecipe.setCookTime(0);
+		guacRecipe.setDescription("Perfect GuacRecipe");
 		guacRecipe.setPrepTime(10);
+		guacRecipe.setCookTime(0);
 		guacRecipe.setDifficulty(Difficulty.EASY);
-		guacRecipe.setDirections("1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n" + 
+		guacRecipe.setDirections("MethodShow Photos\n" + 
+				"1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n" + 
 				"\n" + 
 				"2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)\n" + 
 				"\n" + 
@@ -121,10 +114,12 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 				"\n" + 
 				"\n" + 
 				"\n" + 
-				"Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz52sYPQNRe");
+				"Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz53T2vZTZ0");
 		Notes guacNotes = new Notes();
 		guacNotes.setRecipe(guacRecipe);
-		guacNotes.setRecipeNotes("For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados.\n" + 
+		guacNotes.setRecipeNotes("Variations\n" + 
+				"\n" + 
+				"For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados.\n" + 
 				"\n" + 
 				"Feel free to experiment! One classic Mexican guacamole has pomegranate seeds and chunks of peaches in it (a Diana Kennedy favorite). Try guacamole with added pineapple, mango, or strawberries (see our Strawberry Guacamole).\n" + 
 				"\n" + 
@@ -136,27 +131,24 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 				"\n" + 
 				"\n" + 
 				"\n" + 
-				"Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz52sYjIPKP");
+				"Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz53T386GqJ");
 		guacRecipe.setNotes(guacNotes);
-		guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), each));
-		guacRecipe.getIngredients().add(new Ingredient("teaspoon Kosher salt", new BigDecimal("0.5"), teaspoon));
-		guacRecipe.getIngredients().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1), tablespoon));
-		guacRecipe.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tablespoon));
-		guacRecipe.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), each));
-		guacRecipe.getIngredients().add(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2), tablespoon));
-		guacRecipe.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(2), each));
-		guacRecipe.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal("0.5"), each));
 		
-		guacRecipe.getCategories().add(mexicanCat);
-		guacRecipe.getCategories().add(americanCat);
+		guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM));
+		guacRecipe.getIngredients().add(new Ingredient("kosher salt", new BigDecimal("0.5"), teaspoonUOM));
+		guacRecipe.getIngredients().add(new Ingredient("fresh lime juice", new BigDecimal(2), tablespoonUOM));
+		guacRecipe.getIngredients().add(new Ingredient("minced green onoin ", new BigDecimal(2), eachUOM));
+		guacRecipe.getIngredients().add(new Ingredient("chillies", new BigDecimal(2), eachUOM));
+		guacRecipe.getIngredients().add(new Ingredient("cilantros", new BigDecimal(2), tablespoonUOM));
+		guacRecipe.getIngredients().add(new Ingredient("ripe tomoate, chopped", new BigDecimal("0.5"), eachUOM));
 		
+		guacRecipe.getCategories().add(americaCategory);
+		guacRecipe.getCategories().add(mexicanCategory);
 		
-		// taco recipe
 		Recipe tacoRecipe = new Recipe();
-		tacoRecipe.setDescription("Spicy Grilled Chicken Tacos\n" + 
-				"");
-		tacoRecipe.setCookTime(15);
+		tacoRecipe.setDescription("Spicy grill taco");
 		tacoRecipe.setPrepTime(20);
+		tacoRecipe.setCookTime(15);
 		tacoRecipe.setDifficulty(Difficulty.MODERATE);
 		tacoRecipe.setDirections("1 Prepare a gas or charcoal grill for medium-high, direct heat.\n" + 
 				"\n" + 
@@ -174,30 +166,48 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 				"\n" + 
 				"\n" + 
 				"\n" + 
-				"Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz52sakcjOx");
+				"Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz53T4RFsLf");
 		Notes tacoNotes = new Notes();
 		tacoNotes.setRecipe(tacoRecipe);
 		tacoNotes.setRecipeNotes("Look for ancho chile powder with the Mexican ingredients at your grocery store, on buy it online. (If you can't find ancho chili powder, you replace the ancho chili, the oregano, and the cumin with 2 1/2 tablespoons regular chili powder, though the flavor won't be quite the same.)\n" + 
 				"\n" + 
-				"Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz52sasFk00");
+				"Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz53T4ZwuZV");
 		tacoRecipe.setNotes(tacoNotes);
-		tacoRecipe.getIngredients().add(new Ingredient("ancho chili powder", new BigDecimal(2), tablespoon));
-		tacoRecipe.getIngredients().add(new Ingredient("dried oregano", new BigDecimal(1), teaspoon));
-		tacoRecipe.getIngredients().add(new Ingredient("dried cumin", new BigDecimal(1), teaspoon));
-		tacoRecipe.getIngredients().add(new Ingredient("sugar", new BigDecimal(1), teaspoon));
-		tacoRecipe.getIngredients().add(new Ingredient("salt", new BigDecimal("0.5"), teaspoon));
-		tacoRecipe.getIngredients().add(new Ingredient("garlic, finely chopped", new BigDecimal(1), each));
-		tacoRecipe.getIngredients().add(new Ingredient("finely grated orange zest", new BigDecimal(1), tablespoon));
-		tacoRecipe.getIngredients().add(new Ingredient("fresh-squeezed orange juice", new BigDecimal(3), tablespoon));
 		
-		tacoRecipe.getCategories().add(americanCat);
-		tacoRecipe.getCategories().add(mexicanCat);
+		tacoRecipe.getIngredients().add(new Ingredient("ancho chilli powder", new BigDecimal(2), tablespoonUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("dired oregano", new BigDecimal(1), eachUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("dried cumin", new BigDecimal(2), teaspoonUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("sugar", new BigDecimal(2), tablespoonUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("garlic", new BigDecimal(2), eachUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("cherry tomatoes", new BigDecimal(2), eachUOM));
+		tacoRecipe.getIngredients().add(new Ingredient("cut lime wedges", new BigDecimal(4), eachUOM));
 		
-		recipes.add(guacRecipe);
-		recipes.add(tacoRecipe);
+		tacoRecipe.getCategories().add(americaCategory);
+		tacoRecipe.getCategories().add(mexicanCategory);
 		
-		return recipes;
+		
+		recipesList.add(guacRecipe);
+		recipesList.add(tacoRecipe);
+		
+		return recipesList;
 	}
 
-
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent arg0) {
+		// TODO Auto-generated method stub
+		recipeRepository.saveAll(getRecipes());
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
