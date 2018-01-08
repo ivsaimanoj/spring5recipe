@@ -11,8 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude= {"recipe"})
 @Entity
 public class Ingredient {
 
@@ -38,6 +40,14 @@ public class Ingredient {
 		this.description = description;
 		this.amount = amount;
 		this.measure = measure;
+	}
+	
+	public Ingredient(String description, BigDecimal amount, UnitOfMeasure measure, Recipe recipe) {
+		super();
+		this.description = description;
+		this.amount = amount;
+		this.measure = measure;
+		this.recipe = recipe;
 	}
 
 }

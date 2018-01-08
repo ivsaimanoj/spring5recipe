@@ -3,15 +3,16 @@ package com.vism.spring5recipe.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude= {"recipes"})
 @Entity
 public class Category {
 
@@ -20,7 +21,7 @@ public class Category {
 	private Long id;
 	private String description;
 
-	@ManyToMany(mappedBy="categories", fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="categories")
 	private Set<Recipe> recipes;
 	
 	
