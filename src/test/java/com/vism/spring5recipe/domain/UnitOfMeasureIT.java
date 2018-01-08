@@ -27,7 +27,7 @@ public class UnitOfMeasureIT {
 	@Test
 //	@DirtiesContext --> this will reload the spring context
 	public void findByDescriptionTest() {
-		Optional<UnitOfMeasure> uomOptional = uomRepo.findByDescription("Teaspoon");
+		Optional<UnitOfMeasure> uomOptional = uomRepo.findByDescription("Teadspoon");
 		assertEquals("Teaspoon", uomOptional.get().getDescription());
 	}
 
