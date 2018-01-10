@@ -37,6 +37,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
+        // comments for testing 
     }
 
     @Override
